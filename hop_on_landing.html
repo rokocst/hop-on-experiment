@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hop On - Find Your Study Spot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .alert {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+        }
+        
+        .alert-text {
+            color: #856404;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .cafe-list {
+            margin-bottom: 32px;
+        }
+        
+        .cafe-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .cafe-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        
+        .cafe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .cafe-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-limited {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-full {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .cafe-details {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .outlet-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .outlet-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .cta-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .cta-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .last-updated {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 24px;
+        }
+        
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Hop On</div>
+            <div class="tagline">Live Study Spot Availability</div>
+        </div>
+        
+        <div class="alert">
+            <div class="alert-text">🔥 Peak study hours: Most cafés fill up by 1 PM</div>
+        </div>
+        
+        <div class="cafe-list">
+            <div class="cafe-card">
+                <div class="cafe-header">
+                    <div class="cafe-name">Monigram Coffee Roasters</div>
+                    <div class="status-badge status-limited">Limited</div>
+                </div>
+                <div class="cafe-details">📍 10 min walk from Doon Campus</div>
+                <div class="outlet-info">
+                    <svg class="outlet-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    </svg>
+                    <span style="color: #ffc107;">2 outlets available</span>
+                </div>
+            </div>
+            
+            <div class="cafe-card">
+                <div class="cafe-header">
+                    <div class="cafe-name">Balzac's Coffee</div>
+                    <div class="status-badge status-full">Full</div>
+                </div>
+                <div class="cafe-details">📍 8 min walk from Doon Campus</div>
+                <div class="outlet-info">
+                    <svg class="outlet-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    </svg>
+                    <span style="color: #dc3545;">0 outlets available</span>
+                </div>
+            </div>
+            
+            <div class="cafe-card">
+                <div class="cafe-header">
+                    <div class="cafe-name">Smile Tiger Coffee Roasters</div>
+                    <div class="status-badge status-available">Available</div>
+                </div>
+                <div class="cafe-details">📍 12 min walk from Waterloo Campus</div>
+                <div class="outlet-info">
+                    <svg class="outlet-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    </svg>
+                    <span style="color: #28a745;">5+ outlets available</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <div class="cta-title">Get Notified When Spots Open</div>
+            <div class="cta-subtitle">Be the first to know when your favorite café has an outlet available</div>
+            
+            <form id="notifyForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Your email address" required>
+                </div>
+                <button type="submit" class="submit-btn">Notify Me When a Seat Opens</button>
+            </form>
+            
+            <div id="successMessage" class="success-message">
+                ✅ Thanks! We'll notify you when spots open up.
+            </div>
+        </div>
+        
+        <div class="last-updated">
+            Last updated: <span id="updateTime"></span>
+        </div>
+    </div>
+    
+    <script>
+        // Display current time as "last updated"
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            document.getElementById('updateTime').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 60000); // Update every minute
+        
+        // Handle form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('notifyForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Hide form and show success message
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            // In a real experiment, you'd send this to a Google Form or email collection service
+            // For now, we'll just log it
+            console.log('Email submitted:', event.target[0].value);
+        }
+    </script>
+</body>
+</html>
